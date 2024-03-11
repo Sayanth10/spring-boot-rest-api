@@ -11,8 +11,12 @@
 	<groupId>com.xion</groupId>
 	<artifactId>spring-boot-rest-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>spring-boot-rest-api</name>
 	<description>Demo project for Spring Boot</description>
+	<modules>
+		<module>springboot-crud</module>
+	</modules>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

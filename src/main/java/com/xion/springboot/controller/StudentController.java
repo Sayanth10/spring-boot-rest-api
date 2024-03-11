@@ -1,10 +1,9 @@
 package com.xion.springboot.controller;
 
 import com.xion.springboot.bean.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,5 +54,40 @@ public class StudentController {
     @GetMapping("all-students/one")
     public Student getStudentWithMultipleRequestParam(@RequestParam int id, @RequestParam String firstName) {
         return new Student(id, firstName, "Mahendran");
+    }
+
+    // Rest API that handles HTTP POST Request - Creating new resource
+    // @PostMapping and @RequestBody
+    @PostMapping("students/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Student createStudent(@RequestBody Student student) {
+        System.out.println(student.getId());
+        System.out.println(student.getFirstName());
+        System.out.println(student.getLastName());
+        return student;
+
+    }
+
+    // Rest API that handles HTTP PUT Request - Updating existing resource
+    @PutMapping("students/{id}/update")
+    public Student updateStudent(@RequestBody Student student, @PathVariable("id") int studentId) {
+        System.out.println(student.getFirstName());
+        System.out.println(student.getLastName());
+        return student;
+    }
+
+    // Rest API that handles Delete Request
+    @DeleteMapping("students/{id}/delete")
+    public String deleteStudent(@PathVariable("id") int studentId) {
+        System.out.println(studentId);
+        return "Student deleted successfully";
+    }
+
+    // Rest API returns a java bean with ResponseEntity
+    @GetMapping("student/get")
+    public ResponseEntity<Student> getStudentWithResponseEntity() {
+        Student student = new Student(1, "Sayanthan", "Mahendran");
+//        return new ResponseEntity<>(student, HttpStatus.OK);
+        return ResponseEntity.ok().header("custom-header", "Sayan").body(student);
     }
 }
